@@ -16,8 +16,8 @@ export const getAllListing = async (req, res) => {
 
 export const getListing = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const Listing = await ListingModel.findOne({ pname: slug });
+    const { id } = req.params;
+    const Listing = await ListingModel.findById(id);
     res.status(200).json(Listing);
   } catch (error) {
     console.log({ error: error.message });
