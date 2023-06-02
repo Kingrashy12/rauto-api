@@ -35,8 +35,8 @@ export const loginUser = async (req, res) => {
     // const match = await bcrypt.compare(password, user.password);
     const match = await UserModel.findOne({ password: password });
     if (!match) return res.status(400).json("Invaild Password");
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.status(200).json({ token, user });
+    const token = genAuthToken(user);
+    res.status(200).json(token);
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ meg: error.message });
