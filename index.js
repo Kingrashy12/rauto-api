@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import AuthRoute from "./routes/Auth.js";
 import UsersRoute from "./routes/Users.js";
-import PostRouthe from "./routes/Post.js";
 import ListRoute from "./routes/Listing.js";
 
 const app = express();
@@ -24,7 +23,6 @@ app.use(
 
 app.use("/auth", AuthRoute);
 app.use("/users", UsersRoute);
-app.use("/post", PostRouthe);
 app.use("/listing", ListRoute);
 
 app.get("/", (req, res) => {
