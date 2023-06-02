@@ -5,8 +5,9 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const getAllListing = async (req, res) => {
   try {
-    const item = productdata;
-    res.status(200).json(item);
+    const listing = await ListingModel.find();
+    if (!listing) return res.status(404).json("No Listing Avaliable");
+    res.status(200).json(listing);
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ error: error.message });
@@ -16,7 +17,7 @@ export const getAllListing = async (req, res) => {
 export const getListing = async (req, res) => {
   try {
     const { slug } = req.params;
-    const Listing = productdata.find((p) => p.pname.toLowerCase() === slug);
+    const Listing = ListingModel.find((p) => p.pname.toLowerCase() === slug);
     res.status(200).json(Listing);
   } catch (error) {
     console.log({ error: error.message });
