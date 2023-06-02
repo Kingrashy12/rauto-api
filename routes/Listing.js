@@ -8,6 +8,6 @@ import {
 const router = express.Router();
 
 router.get("/", getAllListing);
-router.get("/:slug", getListing);
+router.get("/:id", getListing);
 router.post("/new", createListing);
 export default router;

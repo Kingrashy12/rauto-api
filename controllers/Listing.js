@@ -16,8 +16,8 @@ export const getAllListing = async (req, res) => {
 
 export const getListing = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const Listing = ListingModel.find((p) => p.pname.toLowerCase() === slug);
+    const { id } = req.params;
+    const Listing = ListingModel.findById(id);
     res.status(200).json(Listing);
   } catch (error) {
     console.log({ error: error.message });
