@@ -33,7 +33,9 @@ export const loginUser = async (req, res) => {
     const user = await UserModel.findOne({ email: email });
     if (!user) return res.status(404).json({ meg: "User not found" });
     // const match = await bcrypt.compare(password, user.password);
-    const match = await UserModel.findOne({ password: password });
+    const match = await UserModel.findOne({
+      password: (user.password = password),
+    });
     if (!match) return res.status(400).json("Invaild Password");
     const token = genAuthToken(user);
     res.status(200).json(token);
