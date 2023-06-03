@@ -13,6 +13,8 @@ export const productdata = [
     // img: GT63S,
     pImage: "./amg-gt-63-s.jpg",
     slug: "amg-gt-63",
+    id: 12,
+    feedback: [],
   },
   {
     pname: "Mercedes AMG GT 53 Coupe",
@@ -27,6 +29,8 @@ export const productdata = [
     pPrice: 95000000,
     pImage: "./gt-63.jpg",
     slug: "amg-gt-53",
+    id: 23,
+    feedback: [],
   },
   {
     pname: "Mercedes AMG GT",
@@ -41,6 +45,8 @@ export const productdata = [
     pPrice: 125000000,
     pImage: "./amg-gt-63-s.jpg",
     slug: "amg-gt-63",
+    id: 34,
+    feedback: [],
   },
   {
     pname: "Mercedes AMG GT",
@@ -55,6 +61,8 @@ export const productdata = [
     pPrice: 125000000,
     pImage: "./amg-gt-63-s.jpg",
     slug: "amg-gt-63",
+    id: 45,
+    feedback: [],
   },
   {
     pname: "Mercedes AMG GT",
@@ -69,6 +77,8 @@ export const productdata = [
     pPrice: 125000000,
     pImage: "./amg-gt-63-s.jpg",
     slug: "amg-gt-63",
+    id: 56,
+    feedback: [],
   },
   {
     pname: "Lamborghini Huracan STO",
@@ -83,6 +93,8 @@ export const productdata = [
     pPrice: 350000000,
     pImage: "./huracan sto.jpg",
     slug: "lamborghini-sto",
+    id: 67,
+    feedback: [],
   },
   {
     pname: "Lamborghini STO",
@@ -97,5 +109,7 @@ export const productdata = [
     pPrice: 350000000,
     pImage: "./sto_04_m.jpg",
     slug: "lamborghini-sto",
+    id: 78,
+    feedback: [],
   },
 ];

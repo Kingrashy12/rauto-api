@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import AuthRoute from "./routes/Auth.js";
 import UsersRoute from "./routes/Users.js";
 import ListRoute from "./routes/Listing.js";
+import FeedBackRoute from "./routes/FeedBack.js";
 
 const app = express();
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(
 app.use("/auth", AuthRoute);
 app.use("/users", UsersRoute);
 app.use("/listing", ListRoute);
+app.use("/feedback", FeedBackRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello from home");

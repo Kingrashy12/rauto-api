@@ -74,7 +74,7 @@ export const createListing = async (req, res) => {
 export const getSimilarListing = async (req, res) => {
   try {
     const { pmake } = req.params;
-    const SimilarList = await ListingModel.findOne({ pmake: pmake });
+    const SimilarList = await ListingModel.find({ pmake: pmake });
     res.status(200).json(SimilarList);
   } catch (error) {
     console.log({ error: error.message });
