@@ -70,3 +70,14 @@ export const createListing = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getSimilarListing = async (req, res) => {
+  try {
+    const { pmake } = req.params;
+    const SimilarList = await ListingModel.findOne({ pmake: pmake });
+    res.status(200).json(SimilarList);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
