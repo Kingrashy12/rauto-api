@@ -6,9 +6,9 @@ const FeedBackSchema = mongoose.Schema(
     userId: { type: String, required: true },
     name: { type: String, required: true },
     userProfile: { type: Object },
-    body: { type: String },
+    body: { type: String, required: true },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const FeedBackModel = mongoose.model("FeedBacks", FeedBackSchema);

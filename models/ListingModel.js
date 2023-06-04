@@ -17,10 +17,17 @@ const ListingSchema = mongoose.Schema(
     pPrice: { type: Number, required: true },
     pImage: { type: Object, required: true },
     comment: { type: Array, default: [] },
+    comments: [
+      {
+        text: String,
+        created: { type: Date, default: Date.now },
+        postedBy: { type: String },
+      },
+    ],
     likes: { type: Map, of: Boolean },
     // slug: { type: String, required: true },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const ListingModel = mongoose.model("Listing", ListingSchema);

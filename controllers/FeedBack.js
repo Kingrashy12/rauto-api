@@ -1,26 +1,33 @@
 import { productdata } from "../listing.js";
+import FeedBackModel from "../models/FeedBackModel.js";
+import ListingModel from "../models/ListingModel.js";
+import UserModel from "../models/UserModel.js";
 
 const feedback = [];
 
 export const addFeedBack = async (req, res) => {
-  const { userId, name, body } = req.body;
-  const { listId } = req.params;
+  const { userId, body, listingId } = req.body;
+  // const { listingId } = req.params;
   try {
-    const feed = { userId, name, body };
-    const feedb = feedback.push(feed);
-    res.status(201).json(feedback);
+    const user = await UserModel.findById(userId);
+    const feedback = new FeedBackModel({
+      userId,
+      name: user.name,
+      userProfile: user.userProfile,
+      listingId,
+      body,
+    });
+    const Listing = await ListingModel.findByIdAndUpdate(
+      listingId,
+      { $push: { comment: feedback } },
+      { new: true }
+    );
+    const newFeedback = await feedback.save();
+    res.status(201).json(newFeedback);
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ error: error.message });
   }
 };
 
-export const getList = async (req, res) => {
-  try {
-    const List = feedback;
-    res.status(200).json(List);
-  } catch (error) {
-    console.log({ error: error.message });
-    res.status(500).json({ error: error.message });
-  }
-};
+export const getList = async (req, res) => {};
