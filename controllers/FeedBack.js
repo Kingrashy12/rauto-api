@@ -1,13 +1,10 @@
-import { productdata } from "../listing.js";
 import FeedBackModel from "../models/FeedBackModel.js";
 import ListingModel from "../models/ListingModel.js";
 import UserModel from "../models/UserModel.js";
 
-const feedback = [];
-
 export const addFeedBack = async (req, res) => {
   const { userId, body, listingId } = req.body;
-  // const { listingId } = req.params;
+
   try {
     const user = await UserModel.findById(userId);
     const feedback = new FeedBackModel({
