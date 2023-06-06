@@ -17,7 +17,7 @@ const ListingSchema = mongoose.Schema(
     pPrice: { type: Number, required: true },
     pImage: { type: Object, required: true },
     comment: { type: Array, default: [] },
-    likes: { type: Map, of: Boolean },
+    likes: { type: Array, default: [] },
   },
   { timestamps: true }
 );

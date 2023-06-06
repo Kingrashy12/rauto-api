@@ -1,3 +1,4 @@
+import SaveModel from "../models/SaveModel.js";
 import UserModel from "../models/UserModel.js";
 // import bcrypt from "bcrypt";
 import cloudinary from "../utils/cloudinary.js";
@@ -82,3 +83,30 @@ export const delectedUser = async (req, res) => {
 };
 
 export const addRemoveFriend = async (req, res) => {};
+
+export const getUserSaved = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const response = await SaveModel.find(userId);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete //** Remove Listing from save **//
+export const RemoveSave = async (req, res) => {
+  const { saveId } = req.params;
+  const { userId } = req.body;
+  try {
+    const Item = await SaveModel.findById(saveId);
+    const removedItem = await UserModel.findByIdAndUpdate(userId, {
+      $unset: { saved: Item },
+    });
+    res.status(200).json(removedItem);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};

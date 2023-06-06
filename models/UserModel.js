@@ -10,6 +10,7 @@ const UserSchema = mongoose.Schema(
     followers: { type: Array, default: [] },
     following: { type: Array, default: [] },
     userProfile: { type: Object },
+    saved: { type: Array, default: [] },
   },
   { timestamps: true }
 );

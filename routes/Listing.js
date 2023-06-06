@@ -17,5 +17,5 @@ router.get("/similar/:pmake", getSimilarListing);
 router.get("/user/:username", getUserList);
 router.get("/brand/:pmake", getMakeList);
 router.post("/new", createListing);
-router.post("/:id/:userId/save", SaveItem);
+router.patch("/save", SaveItem);
 export default router;
