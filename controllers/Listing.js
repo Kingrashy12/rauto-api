@@ -6,19 +6,9 @@ import UserModel from "../models/UserModel.js";
 import cloudinary from "../utils/cloudinary.js";
 
 // Get ALL /*/ GELL ALL LISTING AVAILABLE IN THE DATABASE /*/
-export const getAllListing = async (req, res) => {
-  try {
-    const listing = productdata;
-    if (!listing) return res.status(404).json("No Listing Avaliable");
-    res.status(200).json(listing);
-  } catch (error) {
-    console.log({ error: error.message });
-    res.status(500).json({ error: error.message });
-  }
-};
 // export const getAllListing = async (req, res) => {
 //   try {
-//     const listing = await ListingModel.find();
+//     const listing = productdata;
 //     if (!listing) return res.status(404).json("No Listing Avaliable");
 //     res.status(200).json(listing);
 //   } catch (error) {
@@ -26,6 +16,16 @@ export const getAllListing = async (req, res) => {
 //     res.status(500).json({ error: error.message });
 //   }
 // };
+export const getAllListing = async (req, res) => {
+  try {
+    const listing = await ListingModel.find();
+    if (!listing) return res.status(404).json("No Listing Avaliable");
+    res.status(200).json(listing);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Get /*/ GET SINGLE LISTING BY ID THROW REQ.PARAMS /*/
 export const getListing = async (req, res) => {
