@@ -1,4 +1,5 @@
-import SaveModel from "../models/SaveModel.js";
+import FollowersModel from "../models/FollowersModel.js";
+import FollowingModel from "../models/FollowingModel.js";
 import UserModel from "../models/UserModel.js";
 // import bcrypt from "bcrypt";
 import cloudinary from "../utils/cloudinary.js";
@@ -82,29 +83,35 @@ export const delectedUser = async (req, res) => {
   }
 };
 
-export const addRemoveFriend = async (req, res) => {};
-
-export const getUserSaved = async (req, res) => {
+export const addRemoveFriend = async (req, res) => {
+  const username = req.params;
   try {
-    const { userId } = req.params;
-    const response = await SaveModel.find(userId);
-    res.status(200).json(response);
-  } catch (error) {
-    console.log({ error: error.message });
-    res.status(500).json({ error: error.message });
-  }
-};
+    const { userId } = req.body;
 
-// Delete //** Remove Listing from save **//
-export const RemoveSave = async (req, res) => {
-  const { saveId } = req.params;
-  const { userId } = req.body;
-  try {
-    const Item = await SaveModel.findById(saveId);
-    const removedItem = await UserModel.findByIdAndUpdate(userId, {
-      $unset: { saved: Item },
-    });
-    res.status(200).json(removedItem);
+    if (username === userId) {
+      return res.status(403).json("Action Forbidden");
+    } else {
+      try {
+        const followUser = await UserModel.findOne(username);
+        const followingUser = await UserModel.findById(userId);
+
+        if (!followUser.followers.includes(userId)) {
+          await followUser.updateOne({ $push: { followers: userId } });
+          await followingUser.updateOne({ $push: { following: username } });
+          res.status(200).json("User Followed");
+        } else {
+          // res.status(403).json("Already followed by you");
+          await followUser.updateOne({ $pull: { followers: userId } });
+          await followingUser.updateOne({ $pull: { following: username } });
+          res.status(200).json("User Unfollowed");
+        }
+      } catch (error) {
+        console.log({ error: error.message });
+        res.status(500).json({ error: error.message });
+      }
+    }
+
+    // res.status(200).json();
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ error: error.message });

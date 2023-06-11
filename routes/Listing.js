@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  SaveItem,
   createListing,
   getAllListing,
   getListing,
@@ -17,5 +16,4 @@ router.get("/similar/:pmake", getSimilarListing);
 router.get("/user/:username", getUserList);
 router.get("/brand/:pmake", getMakeList);
 router.post("/new", createListing);
-router.patch("/save", SaveItem);
 export default router;

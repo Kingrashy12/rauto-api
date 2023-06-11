@@ -1,21 +1,8 @@
 import { productdata } from "../listing.js";
 import ListingModel from "../models/ListingModel.js";
-import SaveModel from "../models/SaveModel.js";
-import SavedCountModel from "../models/SavedCountModel.js";
 import UserModel from "../models/UserModel.js";
 import cloudinary from "../utils/cloudinary.js";
 
-// Get ALL /*/ GELL ALL LISTING AVAILABLE IN THE DATABASE /*/
-// export const getAllListing = async (req, res) => {
-//   try {
-//     const listing = productdata;
-//     if (!listing) return res.status(404).json("No Listing Avaliable");
-//     res.status(200).json(listing);
-//   } catch (error) {
-//     console.log({ error: error.message });
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 export const getAllListing = async (req, res) => {
   try {
     const listing = await ListingModel.find();
@@ -116,49 +103,6 @@ export const getMakeList = async (req, res) => {
     const { pmake } = req.params;
     const Make = await ListingModel.find({ pmake: pmake });
     res.status(200).json(Make);
-  } catch (error) {
-    console.log({ error: error.message });
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Post //**/ Like And Save //**//
-export const SaveItem = async (req, res) => {
-  const { userId, listingId } = req.body;
-  try {
-    const Item = await ListingModel.findById(listingId);
-    const User = await UserModel.findById(userId);
-    const saved = new SaveModel({
-      userId,
-      pname: Item.pname,
-      pPrice: Item.pPrice,
-      pImage: Item.pImage,
-      pdesc: Item.pdesc,
-      listingId,
-    });
-
-    const savedCount = new SavedCountModel({
-      listingId,
-      userId,
-      name: User.name,
-      userProfile: User.userProfile,
-    });
-
-    const savedItem = await UserModel.findByIdAndUpdate(
-      userId,
-      { $push: { saved: saved } },
-      { new: true }
-    );
-
-    const savedC = await ListingModel.findByIdAndUpdate(
-      listingId,
-      { $push: { likes: savedCount } },
-      { new: true }
-    );
-
-    const savecount = await savedCount.save();
-    const save = await saved.save();
-    res.status(200).json({ savecount, save });
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ error: error.message });
