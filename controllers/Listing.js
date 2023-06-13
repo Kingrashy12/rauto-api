@@ -108,3 +108,18 @@ export const getMakeList = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getBodyType = async (req, res) => {
+  try {
+    const { condition, body } = req.params;
+    const Type = await ListingModel.find({
+      pcondition: condition,
+      pbody: body,
+    });
+    if (!Type) return res.status(404).json("No listing for that condition");
+    res.status(200).json(Type);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
