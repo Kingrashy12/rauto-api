@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", getAllUser);
 router.get("/:username", getSingleUser);
-router.get("/notify/id", getIdUser);
+router.get("/notify/:username", getIdUser);
 router.delete("/:id", delectedUser);
 router.patch("/:id/edit", editUser);
 router.patch("/:username/follow", addRemoveFriend);
