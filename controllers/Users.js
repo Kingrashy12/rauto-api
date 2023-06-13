@@ -1,5 +1,6 @@
 import FollowersModel from "../models/FollowersModel.js";
 import FollowingModel from "../models/FollowingModel.js";
+import NotificationModel from "../models/Notification.js";
 import UserModel from "../models/UserModel.js";
 // import bcrypt from "bcrypt";
 import cloudinary from "../utils/cloudinary.js";
@@ -8,6 +9,17 @@ export const getAllUser = async (req, res) => {
   try {
     const users = await UserModel.find();
     res.status(200).json(users);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getIdUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await UserModel.findById(userId);
+    res.status(200).json(user);
   } catch (error) {
     console.log({ error: error.message });
     res.status(500).json({ error: error.message });
@@ -98,12 +110,26 @@ export const addRemoveFriend = async (req, res) => {
         if (!followUser.followers.includes(userId)) {
           await followUser.updateOne({ $push: { followers: userId } });
           await followingUser.updateOne({ $push: { following: username } });
-          res.status(200).json("User Followed");
+          const notify = new NotificationModel({
+            title: "Followed You",
+            body: followingUser.name,
+            Img: followingUser.userProfile,
+          });
+          const newNotify = await notify.save();
+          await followUser.updateOne({ $push: { notifications: notify } });
+          res.status(200).json(newNotify, "User Followed");
         } else {
           // res.status(403).json("Already followed by you");
           await followUser.updateOne({ $pull: { followers: userId } });
           await followingUser.updateOne({ $pull: { following: username } });
-          res.status(200).json("User Unfollowed");
+          const notify = new NotificationModel({
+            title: "UnFollowed You",
+            body: followingUser.name,
+            Img: followingUser.userProfile,
+          });
+          const newNotify = await notify.save();
+          await followUser.updateOne({ $push: { notifications: notify } });
+          res.status(200).json(newNotify, "User Unfollowed");
         }
       } catch (error) {
         console.log({ error: error.message });

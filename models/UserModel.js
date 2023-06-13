@@ -11,6 +11,7 @@ const UserSchema = mongoose.Schema(
     following: { type: Array, default: [] },
     userProfile: { type: Object },
     saved: { type: Array, default: [] },
+    notifications: { type: Array, default: [] },
   },
   { timestamps: true }
 );
