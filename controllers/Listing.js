@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const getAllListing = async (req, res) => {
   try {
-    const listing = await ListingModel.find();
+    const listing = await ListingModel.find().sort({ createdAt: -1 });
     if (!listing) return res.status(404).json("No Listing Avaliable");
     res.status(200).json(listing);
   } catch (error) {
@@ -98,10 +98,12 @@ export const getSimilarListing = async (req, res) => {
   }
 };
 
+// GET Brand Listing
 export const getMakeList = async (req, res) => {
   try {
     const { pmake } = req.params;
     const Make = await ListingModel.find({ pmake: pmake });
+    if (!Make) return res.status(404).json(`No Listing for ${req.params}`);
     res.status(200).json(Make);
   } catch (error) {
     console.log({ error: error.message });
@@ -109,6 +111,7 @@ export const getMakeList = async (req, res) => {
   }
 };
 
+//  GET By Condition and BodyType
 export const getBodyType = async (req, res) => {
   try {
     const { condition, body } = req.params;
@@ -117,6 +120,19 @@ export const getBodyType = async (req, res) => {
       pbody: body,
     });
     if (!Type) return res.status(404).json("No listing for that condition");
+    res.status(200).json(Type);
+  } catch (error) {
+    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// GET By Condition  // This will get listing by thier conditions
+export const getCondition = async (req, res) => {
+  try {
+    const { condition } = req.params;
+    const Type = await ListingModel.find({ pcondition: condition });
+    if (!Type) return res.status(404).json(`No listing for ${condition}`);
     res.status(200).json(Type);
   } catch (error) {
     console.log({ error: error.message });
