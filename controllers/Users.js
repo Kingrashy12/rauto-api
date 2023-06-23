@@ -40,21 +40,26 @@ export const getSingleUser = async (req, res) => {
 
 export const editUser = async (req, res) => {
   const { id } = req.params;
-  const { userId, userProfile } = req.body;
+  const { userId, userProfile, name, username, email } = req.body;
   try {
     if (id === userId) {
-      if (userProfile) {
-        const uploadRes = await cloudinary.uploader.upload(userProfile, {
-          upload_preset: "users-profile",
-        });
-        if (uploadRes) {
-          const updatedUser = await UserModel.findByIdAndUpdate(id, req.body, {
-            new: true,
-          });
+      const uploadRes = await cloudinary.uploader.upload(userProfile, {
+        upload_preset: "users-profile",
+      });
 
-          res.status(200).json(updatedUser);
-        }
-      }
+      const newUpdate = {
+        userId,
+        name: name,
+        username: username,
+        email: email,
+        userProfile: uploadRes || "",
+      };
+
+      const updatedUser = await UserModel.findByIdAndUpdate(id, newUpdate, {
+        new: true,
+      });
+
+      res.status(200).json(updatedUser);
     } else {
       return res.status(404).json({ msg: "Access denied" });
     }
