@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getAllUser);
 router.get("/:username", getSingleUser);
 router.get("/notify/:username", getIdUser);
-router.delete("/:id", delectedUser);
+router.delete("/:id/delete", delectedUser);
 router.patch("/:id/edit", editUser);
 router.patch("/:username/follow", addRemoveFriend);
 
